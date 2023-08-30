@@ -1,10 +1,10 @@
 package org.jacobdgraham.datastructures;
 
-public class Node<T> {
+public class SinglyLinkedListNode<T> {
     public T data;
-    public Node<T> next;
+    public SinglyLinkedListNode<T> next;
 
-    public Node(T data, Node<T> next) {
+    public SinglyLinkedListNode(T data, SinglyLinkedListNode<T> next) {
         this.data = data;
         this.next = next;
     }

@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 public class SinglyLinkedList<T> implements Iterable<T> {
     private int size = 0;
-    private Node<T> head = null;
+    private SinglyLinkedListNode<T> head = null;
 
     public SinglyLinkedList() {
         this.size = 0;
@@ -19,10 +19,10 @@ public class SinglyLinkedList<T> implements Iterable<T> {
     }
 
     public void clear() {
-        Node<T> traversal_node = head;
+        SinglyLinkedListNode<T> traversal_node = head;
 
         while (traversal_node != null) {
-            Node<T> next = traversal_node.next;
+            SinglyLinkedListNode<T> next = traversal_node.next;
             traversal_node.next = null;
             traversal_node.data = null;
             traversal_node = next;
@@ -33,11 +33,11 @@ public class SinglyLinkedList<T> implements Iterable<T> {
 
     public void addLast(final T element) {
         if (isEmpty()) {
-            this.head = new Node<T>(element, null);
+            this.head = new SinglyLinkedListNode<T>(element, null);
             this.size = 1;
         } else {
-            Node current = this.head;
-            Node node = new Node(element, null);
+            SinglyLinkedListNode current = this.head;
+            SinglyLinkedListNode node = new SinglyLinkedListNode(element, null);
             node.data = element;
             while (current.next != null) {
                 current = current.next;
@@ -50,11 +50,11 @@ public class SinglyLinkedList<T> implements Iterable<T> {
 
     public void addFirst(final T element) {
         if (isEmpty()) {
-            this.head = new Node<T>(element,null);
+            this.head = new SinglyLinkedListNode<T>(element,null);
             this.size=1;
         } else {
-            Node old_head = this.head;
-            Node new_head_node = new Node<T>(element,null);
+            SinglyLinkedListNode old_head = this.head;
+            SinglyLinkedListNode new_head_node = new SinglyLinkedListNode<T>(element,null);
             this.head = new_head_node;
             new_head_node.next = old_head;
             this.size++;
@@ -76,7 +76,7 @@ public class SinglyLinkedList<T> implements Iterable<T> {
         if (isEmpty()) {
             return null;
         } else {
-            Node current_head = this.head;
+            SinglyLinkedListNode current_head = this.head;
             while (current_head.next != null) {
                 current_head = current_head.next;
             }
@@ -84,7 +84,7 @@ public class SinglyLinkedList<T> implements Iterable<T> {
         }
     }
 
-    public T remove(final Node<T> data) {
+    public T remove(final SinglyLinkedListNode<T> data) {
         if (head == null) {
             return null;
         }
@@ -95,7 +95,7 @@ public class SinglyLinkedList<T> implements Iterable<T> {
             return data_to_return;
         }
 
-        Node current_head = this.head;
+        SinglyLinkedListNode current_head = this.head;
         while (current_head.next != null) {
             if (current_head.data.equals(data)) {
                 T data_to_return = (T) current_head.data;
@@ -115,7 +115,7 @@ public class SinglyLinkedList<T> implements Iterable<T> {
         if (index == 0) {
             return removeFirst();
         }
-        Node<T> current = head;
+        SinglyLinkedListNode<T> current = head;
         for (int i = 0; i < index - 1; i++) {
             current = current.next;
         }
@@ -148,7 +148,7 @@ public class SinglyLinkedList<T> implements Iterable<T> {
             size--;
             return data_to_return;
         }
-        Node current_head = this.head;
+        SinglyLinkedListNode current_head = this.head;
 
         while (current_head.next != null) {
 
@@ -172,7 +172,7 @@ public class SinglyLinkedList<T> implements Iterable<T> {
             return 0;
         }
 
-        Node current_head = this.head;
+        SinglyLinkedListNode current_head = this.head;
         int counter = 0;
 
         while (current_head.next != null) {
@@ -190,7 +190,7 @@ public class SinglyLinkedList<T> implements Iterable<T> {
         if (this.head == null) {
             return false;
         }
-        Node current_head = this.head;
+        SinglyLinkedListNode current_head = this.head;
         
         while (current_head.next != null) {
             
@@ -205,7 +205,7 @@ public class SinglyLinkedList<T> implements Iterable<T> {
     @Override
     public Iterator<T> iterator() {
         return new java.util.Iterator<T>() {
-            private Node<T> linked_list_head = head;
+            private SinglyLinkedListNode<T> linked_list_head = head;
             
             @Override
             public boolean hasNext() {
