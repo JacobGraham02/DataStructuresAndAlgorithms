@@ -1,0 +1,223 @@
+package org.jacobdgraham.datastructures;
+
+import java.util.Iterator;
+
+public class SinglyLinkedList<T> implements Iterable<T> {
+    private int size = 0;
+    private Node<T> head = null;
+
+    public SinglyLinkedList() {
+        this.size = 0;
+        this.head = null;
+    }
+    public int size() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public void clear() {
+        Node<T> traversal_node = head;
+
+        while (traversal_node != null) {
+            Node<T> next = traversal_node.next;
+            traversal_node.next = null;
+            traversal_node.data = null;
+            traversal_node = next;
+        }
+        head = null;
+        size = 0;
+    }
+
+    public void addLast(final T element) {
+        if (isEmpty()) {
+            this.head = new Node<T>(element, null);
+            this.size = 1;
+        } else {
+            Node current = this.head;
+            Node node = new Node(element, null);
+            node.data = element;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = node;
+            node.next = null;
+            this.size++;
+        }
+    }
+
+    public void addFirst(final T element) {
+        if (isEmpty()) {
+            this.head = new Node<T>(element,null);
+            this.size=1;
+        } else {
+            Node old_head = this.head;
+            Node new_head_node = new Node<T>(element,null);
+            this.head = new_head_node;
+            new_head_node.next = old_head;
+            this.size++;
+        }
+    }
+
+    public T first() {
+        if(isEmpty()) {
+            return null;
+        } else {
+            return head.data;
+        }
+    }
+
+    public T last() {
+        if (this.head == null) {
+            return null;
+        }
+        if (isEmpty()) {
+            return null;
+        } else {
+            Node current_head = this.head;
+            while (current_head.next != null) {
+                current_head = current_head.next;
+            }
+            return (T) current_head.data;
+        }
+    }
+
+    public T remove(final Node<T> data) {
+        if (head == null) {
+            return null;
+        }
+
+        if (this.head.data.equals(data)) {
+            T data_to_return = head.data;
+            head = head.next;
+            return data_to_return;
+        }
+
+        Node current_head = this.head;
+        while (current_head.next != null) {
+            if (current_head.data.equals(data)) {
+                T data_to_return = (T) current_head.data;
+                current_head.next = current_head.next.next;
+                size--;
+                return data_to_return;
+            }
+            current_head = current_head.next;
+        }
+        return null;
+    }
+
+    public T removeAt(final int index) {
+        if (index < 0 || index >= size) {
+            throw new IllegalArgumentException("Index out of bounds");
+        }
+        if (index == 0) {
+            return removeFirst();
+        }
+        Node<T> current = head;
+        for (int i = 0; i < index - 1; i++) {
+            current = current.next;
+        }
+        T dataToRemove = current.next.data;
+        current.next = current.next.next;
+        size--;
+        return dataToRemove;
+    }
+
+    public T removeFirst() {
+        if (isEmpty()) {
+            return null;
+        }
+
+        T data = head.data;
+        head = head.next;
+        size--;
+
+        return data;
+    }
+
+    public T remove(final T element) {
+        if (this.head == null) {
+            return null;
+        }
+
+        if (this.head.data.equals(element)) {
+            T data_to_return = head.data;
+            head = head.next;
+            size--;
+            return data_to_return;
+        }
+        Node current_head = this.head;
+
+        while (current_head.next != null) {
+
+            if (current_head.data.equals(element)) {
+                T data_to_return = (T) current_head.data;
+                current_head.next = current_head.next.next;
+                size--;
+                return data_to_return;
+            }
+            current_head = current_head.next;
+        }
+        return null;
+    }
+
+    public int indexOf(final T element) {
+        if (this.head == null) {
+            return -1;
+        }
+
+        if (this.head.data.equals(element)) {
+            return 0;
+        }
+
+        Node current_head = this.head;
+        int counter = 0;
+
+        while (current_head.next != null) {
+            
+            if (current_head.data.equals(element)) {
+                return counter;
+            }
+            current_head = current_head.next;
+            counter++;
+        }
+        return -1;
+    }
+
+    public boolean contains(final T element) {
+        if (this.head == null) {
+            return false;
+        }
+        Node current_head = this.head;
+        
+        while (current_head.next != null) {
+            
+            if (current_head.data.equals(element)) {
+                return true;
+            }
+            current_head = current_head.next;
+        }
+        return false;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new java.util.Iterator<T>() {
+            private Node<T> linked_list_head = head;
+            
+            @Override
+            public boolean hasNext() {
+                return linked_list_head != null;
+            }
+
+            @Override
+            public T next() {
+                T data = linked_list_head.data;
+                linked_list_head = linked_list_head.next;
+                return data;
+            }
+        };
+    }
+}
